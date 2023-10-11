@@ -11,6 +11,19 @@ export async function getAllBooksAPI(callback) {
         });
 }
 
+export async function searchAllBooksAPI(query, callback) {
+    await fetch("http://68.178.162.203:8080/application-test-v1.1/books?title=" + query)
+        .then(response => response.json())
+        .then(result => {
+            callback(result);
+            console.log('\n\n searchAllBooksAPI success');
+        })
+        .catch(error => {
+            callback(null)
+            console.log('\n\n searchAllBooksAPI error: ', error)
+        });
+}
+
 export const createBookAPI = async (data, callBack) => {
     var payload = JSON.stringify({
         "author": data?.author,

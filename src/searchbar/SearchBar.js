@@ -1,16 +1,24 @@
 // SearchBar.js
 import React, { useState } from 'react';
 import './SearchBar.css'; // Import your CSS file
+import { searchAllBooksAPI } from '../API/API';
+import { useDispatch } from 'react-redux';
+import { setBooksData } from '../redux/reducer/booksReducer';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ }) => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    searchAllBooksAPI(searchTerm, (res) => {
+      if (res !== null) {
+        dispatch(setBooksData(res?.data))
+      }
+    });
   };
 
   return (
-   
+
     <div className="search-bar-container">
       <input
         type="text"
@@ -22,12 +30,12 @@ const SearchBar = ({ onSearch }) => {
       <button onClick={handleSearch} className="search-button">
         Search
       </button>
-     
-      
+
+
     </div>
 
-     
-   
+
+
   );
 };
 
